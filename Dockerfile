@@ -14,7 +14,8 @@ RUN npm run build
 # Stage 3: Фінальний образ для запуску
 FROM node:24-alpine AS runner
 WORKDIR /app
-ENV NODE_ENV production
+ENV NODE_ENV=production
+ENV PORT=3000
 
 # Використання не-root користувача для безпеки
 RUN addgroup --system --gid 1001 nodejs
@@ -26,5 +27,5 @@ COPY --from=builder /app/.next/static ./.next/static
 
 USER nextjs
 EXPOSE 3000
-ENV PORT 3000
+
 CMD ["node", "server.js"]
